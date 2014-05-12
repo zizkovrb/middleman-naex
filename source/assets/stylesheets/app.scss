@@ -1,0 +1,777 @@
+//= require normalize-css/normalize
+
+@import 'bourbon/bourbon';
+@import 'neat/neat';
+@import 'bitters/bitters';
+
+// Overide some Bitters variables
+// Original setting can be found in source/assets/stylesheets/bitters/_variables.scss
+$blue: #477DCA;
+$dark-gray: #333;
+$medium-gray: #999;
+$light-gray: #DDD;
+$light-red: #FBE3E4;
+$light-yellow: #FFF6BF;
+$light-green: #E6EFC2;
+
+// Body Color
+$base-body-color: white;
+
+//  Font Colors
+$base-font-color: $dark-gray;
+$base-accent-color: $blue;
+
+//  Text Link Colors
+$base-link-color: $base-accent-color;
+$hover-link-color: darken($base-accent-color, 15);
+
+// Border color
+$base-border-color: $light-gray;
+
+// Flash Colors
+$error-color: $light-red;
+$notice-color: $light-yellow;
+$success-color: $light-green;
+
+header.navigation {
+  $navigation-background: $dark-gray;
+  $navigation-color: transparentize(white, 0.3);
+  $navigation-color-hover: white;
+  $navigation-height: 4em;
+  $navigation-nav-button-background: $base-accent-color;
+  $navigation-nav-button-background-hover: lighten($navigation-background, 10);
+  $navigation-nav-button-border: thin solid lighten($navigation-nav-button-background, 20);
+  $navigation-search-background: lighten($navigation-background, 5);
+  $navigation-search-border: thin solid darken($navigation-background, 5);
+
+  background-color: $navigation-background;
+  border-bottom: thin solid darken($navigation-background, 10);
+  font-family: $sans-serif;
+  height: $navigation-height;
+  width: 100%;
+  z-index: 999;
+
+  .menu-wrapper {
+    @include outer-container;
+    position: relative;
+    z-index: 9999;
+  }
+
+  .logo {
+    float: left;
+    max-height: $navigation-height;
+    padding-left: 1em;
+    padding-right: 2em;
+
+    img {
+      max-height: $navigation-height;
+      padding: .8em 0;
+    }
+  }
+
+  .navigation-menu-button {
+    color: $navigation-color;
+    cursor: pointer;
+    display: block;
+    float: right;
+    font-family: $sans-serif;
+    font-weight: 700;
+    line-height: $navigation-height;
+    margin: 0;
+    padding-right: 1em;
+    text-transform: uppercase;
+
+    @include media ($large-screen) {
+      display: none;
+    }
+
+    &:hover {
+      color: $navigation-color-hover;
+    }
+  }
+
+  .nav {
+    @include media ($large-screen) {
+      float: left;
+    }
+  }
+
+  ul#navigation-menu {
+    clear: both;
+    -webkit-transform-style: preserve-3d; // stop webkit flicker
+    display: none;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    z-index: 9999;
+
+    @include media ($large-screen) {
+      display: inline;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  ul li {
+    background: $navigation-background;
+    display: block;
+    line-height: $navigation-height;
+    overflow: hidden;
+    padding-right: .8em;
+    text-align: right;
+    width: 100%;
+    z-index: 9999;
+
+    @include media ($large-screen) {
+      background: transparent;
+      display: inline;
+      line-height: $navigation-height;
+      padding-right: 2em;
+      text-decoration: none;
+      width: auto;
+    }
+
+    a {
+      font-weight: 400;
+      color: $navigation-color;
+
+      &:hover {
+        color: $navigation-color-hover;
+      }
+    }
+  }
+
+  .sign-up {
+    @include media ($large-screen) {
+      @include position(absolute, 0px 0px 0 0);
+      padding-right: 1em;
+
+      a {
+        @include transition (all 0.2s ease-in-out);
+        background: $navigation-nav-button-background;
+        border-radius: $base-border-radius;
+        color: white;
+        font-size: .8em;
+        font-weight: 800;
+        padding: .6em 1em;
+        text-transform: uppercase;
+
+        &:hover {
+          background: lighten($navigation-nav-button-background, 10);
+        }
+      }
+    }
+  }
+
+  li.navigation-search-bar {
+    display: none;
+
+    @include media($large-screen) {
+      @include position(absolute, 0px 76px 0 0);
+      display: inline-block;
+      line-height: 0 !important;
+      padding: 13px 30px; // this to get around Firefox/Opera line-height "bug"
+    }
+  }
+
+  .search-bar {
+    $search-bar-border-color: $base-border-color;
+    $search-bar-border: thin solid $search-bar-border-color;
+    $search-bar-background: lighten($search-bar-border-color, 10);
+
+    width: 19em;
+    position: relative;
+    display: inline-block;
+
+    input {
+      @include box-sizing(border-box);
+      display: block;
+    }
+
+    .search-and-submit {
+      position: relative;
+
+      input[type=search] {
+        background: $navigation-search-background;
+        border: $navigation-search-border;
+        padding: .6em .8em;
+        font-size: .9em;
+        font-style: italic;
+        color: $navigation-color;
+        border-radius: $base-border-radius * 2;
+        margin: 0;
+      }
+
+      button[type=submit] {
+        @include button(simple, lighten($navigation-search-background, 10));
+        @include position(absolute, 0.3em 0.3em 0.3em 0);
+        outline: none;
+        padding: 5px 15px;
+
+        img {
+          height: 12px;
+          opacity: .7;
+        }
+      }
+    }
+  }
+}
+
+.hero {
+  $hero-background: desaturate(darken($base-accent-color,  20), 30);
+  $hero-color: white;
+
+  background: url(https://raw.github.com/Magnus-G/Random/master/lake-transparent.png);
+  background-color: $hero-background;
+  background-repeat: no-repeat;
+  background-position: top    ;
+  background-size: cover;
+  padding-bottom: 4em;
+
+  .hero-logo img {
+    height: 3em;
+    margin-bottom: 1em;
+  }
+
+  .hero-inner {
+    @include outer-container;
+    @include clearfix;
+    padding: 3em;
+    margin: auto;
+    text-align: center;
+    color: $hero-color;
+
+    button {
+      @include button(simple, $base-accent-color);
+      font-size: $base-font-size;
+      outline: none;
+    }
+
+    .hero-copy {
+      text-align: center;
+
+      h1 {
+        font-size: 1.4em;
+        margin-bottom: .2em;
+
+        @include media($large-screen) {
+          font-size: 1.8em;
+        }
+      }
+
+      p {
+        margin: auto;
+        margin-bottom: 3em;
+        font-weight: 200;
+
+        @include media($large-screen)                   {
+          font-size: 1.2em;
+          max-width: 40%;
+        }
+      }
+    }
+  }
+}
+
+.modal {
+  $modal-padding: 3em;
+  $modal-background: $base-body-color;
+  $modal-close-color: $light-gray;
+  $modal-image-height: 135px;
+  $modal-image-width: $modal-image-height;
+
+  label {
+    cursor: pointer;
+    margin-bottom: 0;
+  }
+
+  label img {
+    $img-width: 300px;
+    border-radius: $img-width/2;
+    display: block;
+    max-width: $img-width;
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  .btn {
+    @include button(simple, $base-body-color);
+    font-size: $base-font-size;
+    margin-bottom: $base-line-height;
+  }
+
+  .modal-open {
+    overflow: hidden;
+  }
+
+  .modal-window { // overlay
+    @include transition(opacity .25s ease);
+    @include position(fixed, 0px 0px 0px 0px);
+    background: rgba(0,0,0, .85);
+    opacity: 0;
+    text-align: left;
+    visibility: hidden;
+    z-index: 99999999999;
+
+    .modal-bg {
+      @include position(absolute, 0px 0px 0px 0px);
+      cursor: pointer;
+    }
+  }
+
+  .modal-close {
+    @include position(absolute, ($modal-padding /2) ($modal-padding /2) 0 0);
+    @include size(1.5em);
+    cursor: pointer;
+    background: $modal-background;
+
+    &:after,
+    &:before {
+      @include position(absolute, 3px 3px 0 50%);
+      @include transform(rotate(45deg));
+      @include size(.15em 1.5em);
+      background: $modal-close-color;
+      content: '';
+      display: block;
+      margin: -3px 0 0 -1px;
+    }
+
+    &:hover:after,
+    &:hover:before {
+      background: darken($modal-close-color, 10);
+    }
+
+    &:before {
+      @include transform(rotate(-45deg));
+    }
+  }
+
+  .modal-inner {
+    @include transition(opacity .25s ease);
+    border-radius: $base-border-radius;
+    background: $modal-background;
+    margin: auto;
+    max-height: 95%;
+    position: relative;
+    overflow: auto;
+    width: 95%;
+    padding: $modal-padding /2;
+    margin-top: .6em;
+
+    @include media($medium-screen) {
+      padding: $modal-padding;
+      width: 60%;
+      max-height: 60%;
+      margin-top: 10em;
+    }
+
+    @include media($large-screen) {
+      width: 50%;
+      margin-top: 10em;
+    }
+
+    h1 {
+      color: $base-font-color;
+      margin-bottom: .6em;
+      text-align: left;
+      text-transform: capitalize;
+    }
+
+    p {
+      font-size: $base-font-size;
+      max-width: 100% !important;
+      padding: 0;
+      text-align: left;
+
+      &.intro {
+        color: $blue;
+        line-height: 1.6em;
+      }
+
+      &.body {
+        color: $base-font-color;
+        line-height: 1.45em;
+
+        @include media($medium-screen) {
+          @include columns(2 8em);
+        }
+      }
+    }
+
+    a.cta {
+      color: white;
+      display: inline-block;
+      margin-right: .5em;
+      margin-top: 1em;
+
+      &:last-child {
+        padding: 0 2em;
+      }
+    }
+  }
+
+  .modal-state:checked + .modal-window {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-state:checked + .modal-window .modal-inner {
+    top: 0;
+  }
+}
+
+// Based on code by Kasper Mikiewicz
+#container {
+  @include outer-container;
+  @include pad(1em);
+}
+
+.line-behind-text {
+  text-align: center;
+  border-bottom: thin solid #CACACA;
+  margin-bottom: 3.5em;
+
+  h2 {
+    text-transform: uppercase;
+    color: gray;
+    display: inline-block;
+    position: relative;
+    top: 0.5em;
+    background: white;
+    padding: 0 1em;
+  }
+}
+
+.bullets {
+  $icon-bullet-size: 3.5em;
+
+  overflow: auto;
+  margin-bottom: $base-line-height;
+
+  // change ".three-col-bullet" class to this for two bullet layout
+  .two-col-bullet {
+    @include media($large-screen) {
+      @include span-columns(6);
+      @include omega(2n);
+    }
+  }
+
+  .three-col-bullet {
+    @include media($large-screen) {
+      @include span-columns(4);
+      @include omega(3n);
+    }
+  }
+
+  // change ".three-col-bullet" class to this for four bullet layout
+  .four-col-bullet {
+    @include media($large-screen) {
+      @include span-columns(3);
+      @include omega(4n);
+    }
+  }
+
+  .bullet-icon {
+    float: left;
+    background: $base-accent-color;
+    padding: $icon-bullet-size /4;
+    border-radius: 50%;
+    width: $icon-bullet-size;
+    height: $icon-bullet-size;
+  }
+
+  .bullet-icon-1 {
+    background: $base-accent-color;
+  }
+
+  .bullet-icon-2 {
+    background: adjust-hue($base-accent-color, -50);
+  }
+
+  .bullet-icon-3 {
+    background: adjust-hue($base-accent-color, -140);
+  }
+
+  .bullet-content {
+    margin-left: $icon-bullet-size *1.4;
+    margin-bottom: 2em;
+  }
+
+  h2 {
+    font-size: $icon-bullet-size /2.5;
+    padding-top: $icon-bullet-size /7;
+    margin-bottom: $icon-bullet-size /6;
+    border-bottom: thin solid transparentize($base-font-color, .8);
+    display: inline-block;
+  }
+}
+
+.cards {
+  @include clearfix;
+}
+
+.card {
+  $card-border-color: $base-border-color;
+  $card-border: em(1) solid $card-border-color;
+  $card-background: lighten($card-border-color, 10);
+  $card-header-background: $card-background;
+  $card-hover-background: lighten($card-background, 5);
+  $card-image-background: #DBD199;
+  $card-image-hover-background: lighten($card-image-background, 5);
+  $card-stats-color: lighten($base-accent-color, 10);
+
+  @include transition (all 0.2s ease-in-out);
+  background-color: $card-background;
+  border-radius: $base-border-radius;
+  border: $card-border;
+  margin-bottom: $base-line-height;
+  cursor: pointer;
+  box-shadow: 0 em(2) em(4) darken($base-body-color, 10);
+  position: relative;
+
+  @include media($large-screen) {
+    @include span-columns(4);
+    @include omega(3n);
+  }
+
+  .card-image {
+    overflow: hidden;
+    max-height: 10em;
+
+    img {
+      width: 100%;
+      @include transition (all 0.2s ease-in-out);
+      background: $card-image-background;
+      border-top-left-radius: $base-border-radius;
+      border-top-right-radius: $base-border-radius;
+    }
+  }
+
+  .ribbon-wrapper {
+    $ribbon-size: 6em;
+    $ribbon-background: $base-accent-color;
+    @include size($ribbon-size);
+    overflow: hidden;
+    position: absolute;
+    top: em(-1);
+    right: em(-1);
+
+    .ribbon {
+      font-size: .8em;
+      font-weight: 800;
+      text-align: center;
+      @include transform(rotate(45deg));
+      position: relative;
+      padding: 0.2em 0.5em;
+      left: -0.4em;
+      top: 1em;
+      width: 12em;
+      background-color: $ribbon-background;
+      color: white;
+      box-shadow: 0 0 em(3) rgba(0,0,0,0.3);
+    }
+  }
+
+  .card-header {
+    @include transition (all 0.2s ease-in-out);
+    background-color: $card-header-background;
+    border-bottom: $card-border;
+    border-radius: $base-border-radius $base-border-radius 0 0;
+    font-weight: bold;
+    padding: $base-line-height/3 $gutter/2;
+  }
+
+  .card-copy {
+    padding: $base-line-height/2 $gutter/2;
+    font-size: .9em;
+    line-height: 1.5em;
+  }
+
+  .card-stats {
+    padding: $base-line-height/2 $gutter/2;
+    overflow: auto;
+
+    ul li {
+      display: inline;
+      color: $card-stats-color;
+      font-weight: 800;
+      font-size: 1.2em;
+      float: left;
+      border-right: thin solid transparentize($base-font-color, .8);
+      line-height: 1.1em;
+      padding: 0 .7em 0 .7em;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        border-right: 0;
+      }
+
+      span {
+        color: $base-font-color;
+        font-size: .7em;
+        display: block;
+        font-weight: normal;
+      }
+    }
+  }
+
+  &:hover {
+    background-color: $card-hover-background;
+
+    .card-image img {
+      background: $card-image-hover-background;
+    }
+
+    .card-header {
+      background-color: $card-hover-background;
+    }
+  }
+
+  &:active {
+    background-color: $card-background;
+
+    .card-header {
+      background-color: $card-background;
+    }
+  }
+}
+
+.table-minimal {
+  $table-border-color: $base-border-color;
+  $table-border: thin solid $table-border-color;
+  $table-background: $base-body-color;
+  $table-header-color: lighten($table-background, 10);
+  $table-hover-color: darken($table-background, 2);
+  $table-stripe-color: darken($table-background, 4);
+  $table-stripe-color-hover: darken($table-stripe-color, 5);
+  $table-padding: 0.5em;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  tbody {
+    tr:hover > td, tr:hover > th {
+      background-color: $table-hover-color;
+    }
+    tr:first-child td {
+      border-top: em(2) solid $table-border-color;
+    }
+  }
+
+  thead {
+    th {
+      background-color: $table-header-color;
+      padding: $table-padding;
+      border-bottom: 0;
+    }
+  }
+
+  tbody {
+    background-color: $table-background;
+
+    td {
+      padding: $table-padding;
+      border-top: thin solid $table-border-color;
+      border-bottom: 0;
+
+      button {
+        @include button(simple, $table-background);
+        margin-right: 0.5em;
+        display: inline-block;
+        width: 100%;
+        margin-bottom: .3em;
+        outline: none;
+
+        @include media($medium-screen) {
+          width: auto;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+
+.footer {
+  $footer-background: desaturate(darken($base-accent-color, 20), 30);
+  $footer-color: white;
+  $footer-link-color: transparentize($footer-color, .6);
+  $footer-disclaimer-color: transparentize($footer-color, .6);
+
+  background: $footer-background;
+  padding: $base-line-height*2 $gutter;
+  width: 100%;
+
+  .footer-logo {
+    text-align: center;
+    margin-bottom: 2em;
+
+    img {
+      height: 3em;
+    }
+  }
+
+  .footer-links {
+    @include clearfix;
+    margin-bottom: $base-line-height;
+
+    @include media($large-screen) {
+      @include shift(3);
+    }
+  }
+
+  ul {
+    margin-bottom: $base-line-height*2;
+
+    @include media($large-screen) {
+      @include span-columns(3);
+      @include omega(3n);
+      @include clearfix;
+    }
+  }
+
+  li {
+    text-align: center;
+
+    @include media($large-screen) {
+      text-align: left;
+    }
+  }
+
+  li a {
+    color: $footer-link-color;
+
+    &:hover {
+      color: transparentize($footer-color, 0);
+    }
+  }
+
+  li h3 {
+    color: $footer-color;
+    font-size: 1em;
+    font-weight: 800;
+    margin-bottom: .4em;
+  }
+
+  hr {
+    border: 1px solid transparentize($footer-disclaimer-color, .3);
+    margin: 0 auto $base-line-height;
+    width: 12em;
+  }
+
+  p {
+    color: $footer-disclaimer-color;
+    font-size: .9em;
+    line-height: 1.5em;
+    margin: auto;
+    max-width: 35em;
+    text-align: center;
+  }
+}
+
